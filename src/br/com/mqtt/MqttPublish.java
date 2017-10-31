@@ -1,6 +1,7 @@
 package br.com.mqtt;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -36,9 +37,8 @@ public class MqttPublish implements MqttCallback {
 	public MqttPublish(){
 		
 	}
-	public void publish(Action action) throws IOException {
-		if(action == null)
-			this.action = action;
+	public void publish() throws IOException {
+	
 		if (client == null) {
 			this.connectMQTT(action.getAddress());
 		}

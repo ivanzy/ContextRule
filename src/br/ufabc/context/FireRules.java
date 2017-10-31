@@ -1,5 +1,6 @@
 package br.ufabc.context;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,13 @@ public class FireRules {
 		for (Rule r : ruleList) {
 			if (r.getType().equalsIgnoreCase(message.getType())) {
 				mqttPublish = new MqttPublish(new Action(r.getAction().getTopic(), r.getAction().getAddress(),
-						(message.getMessage() + ";P2=" + System.currentTimeMillis())));
+						(message.getMessage() + ";P2=" + System.currentTimeMillis()))); //rule ou a messagem define???
+				try {
+					mqttPublish.publish();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}

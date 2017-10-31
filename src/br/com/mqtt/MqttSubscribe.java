@@ -105,7 +105,9 @@ public class MqttSubscribe implements MqttCallback,Runnable  {
         String[] type = msg[i++].split("=");
         String[] resource = msg[i++].split("=");
         String[] payload = msg[i++].split("=");
+        String[] scope = msg[i++].split("=");
         String[] rep = msg[i++].split("=");
+        String[] exp = msg[i++].split("=");
         String[] p1 = msg[i++].split("=");
         Message message = new Message();
         message.setMessage(payload[1]);
@@ -113,6 +115,8 @@ public class MqttSubscribe implements MqttCallback,Runnable  {
         message.setP2(time);
         message.setRep(Integer.parseInt(rep[1]));
         message.setResource(resource[1]);
+        message.setExp(Integer.parseInt(exp[1]));
+        message.setScope(scope[1]);
         
         return message;
 
