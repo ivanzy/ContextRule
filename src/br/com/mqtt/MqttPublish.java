@@ -11,7 +11,8 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 
-import br.com.Param.Param;;
+import br.com.Param.Param;
+import br.ufabc.context.Action;;
 
 public class MqttPublish implements MqttCallback {
 
@@ -19,7 +20,7 @@ public class MqttPublish implements MqttCallback {
 	protected MqttClient client;
 	protected MqttConnectOptions options;
 	protected Random fullRand = new Random();
-
+	protected Action action;
 	public void disconnect() {
 		try {
 			client.disconnect();
@@ -28,15 +29,23 @@ public class MqttPublish implements MqttCallback {
 			// ex);
 		}
 	}
-
-	public void publish(String m, String topic) throws IOException {
+	
+	public MqttPublish(Action action) {
+		this.action = action;
+	}
+	public MqttPublish(){
+		
+	}
+	public void publish(Action action) throws IOException {
+		if(action == null)
+			this.action = action;
 		if (client == null) {
-			this.connectMQTT(Param.address);
+			this.connectMQTT(action.getAddress());
 		}
 		try {
 			MqttMessage message = new MqttMessage();
-			message.setPayload(m.getBytes());
-			client.publish(topic, m.getBytes(), Param.qos, false);
+			message.setPayload(action.getMessage().getBytes());
+			client.publish(action.getTopic(), action.getMessage().getBytes(), Param.qos, false);
 		} catch (MqttPersistenceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,7 +58,7 @@ public class MqttPublish implements MqttCallback {
 
 	@Override
 	public void connectionLost(Throwable arg0) {
-		// TODO Auto-generated method stub
+		this.connectMQTT(action.getAddress());
 	}
 
 	@Override

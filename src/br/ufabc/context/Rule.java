@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Rule {
 	private String type;
-	private List message = new ArrayList();
-	private List operation = new ArrayList();
+	//private List operation = new ArrayList();
+	private String operation;
 	private Action action; 
 
 	public Action getAction() {
@@ -18,21 +18,16 @@ public class Rule {
 	public String getType() {
 		return type;
 	}
-	public List getOperation() {
+	public String getOperation() {
 		return operation;
 	}
-	public void setOperation(List operation) {
+	public void setOperation(String operation) {
 		this.operation = operation;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
-	public List getMessage() {
-		return message;
-	}
-	public void setMessage(List message) {
-		this.message = message;
-	}
+
 
 	
 	

@@ -4,6 +4,17 @@ public class Action {
 	private String topic;
 	private String address;
 	private String message;
+	
+	public Action() {
+		
+	}
+	
+	public Action(String topic, String address, String message) {
+		this.topic = topic;
+		this.address = address;
+		this.message = message;
+	}
+	
 	public String getTopic() {
 		return topic;
 	}

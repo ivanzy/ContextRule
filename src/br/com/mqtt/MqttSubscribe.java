@@ -20,31 +20,39 @@ import br.com.Param.Param;
 import br.ufabc.context.FireRules;
 import br.ufabc.context.Message;
 
-public class MqttSubscribe implements MqttCallback {
-
-    public MqttSubscribe() {
+public class MqttSubscribe implements MqttCallback,Runnable  {
+	protected String address;
+	protected String topic;
+    public MqttSubscribe(String address, String topic) {
+    	this.topic = topic;
+    	this.address = address;
     }
 
-    public static void main(String[] args) {
-        for (int i = 0; i < args.length; i++) {
-           
-            if (args[i].equalsIgnoreCase("-nome")) {
-                Param.path += args[i + 1];
-            }
-            else if(args[i].equalsIgnoreCase("-h")) {
-                Param.address = args[i + 1];
-
-            }
-        }
-        new MqttSubscribe().subscribe();
-    }
+//    public static void main(String[] args) {
+//        for (int i = 0; i < args.length; i++) {
+//           
+//            if (args[i].equalsIgnoreCase("-nome")) {
+//                Param.path += args[i + 1];
+//            }
+//            else if(args[i].equalsIgnoreCase("-h")) {
+//                Param.address = args[i + 1];
+//
+//            }
+//        }
+//        new MqttSubscribe().subscribe();
+//    }
+    
+    
     public static int cont = 0;
-
+	@Override
+	public void run() {
+		this.subscribe();
+	}
     
     public void subscribe() {
         try {
             MqttClientPersistence m = new MemoryPersistence();
-            MqttClient client = new MqttClient(Param.address, "experimentoG", m);
+            MqttClient client = new MqttClient(this.address, "experimentoG", m);
             client.setCallback(this);
 
             MqttConnectOptions options = new MqttConnectOptions();
@@ -52,7 +60,7 @@ public class MqttSubscribe implements MqttCallback {
             options.setPassword("pass".toCharArray());
 
             client.connect(options);
-            System.out.println("Subscribing in address " + Param.address + " and topic " + Param.topic);
+            System.out.println("Subscribing in address " + this.address + " and topic " + this.topic);
             client.subscribe(Param.topic);
             try {
                 System.in.read();
@@ -148,4 +156,6 @@ public class MqttSubscribe implements MqttCallback {
 
         }
     }
+
+
 }
