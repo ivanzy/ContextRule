@@ -15,14 +15,20 @@ public class FireRules {
 	}
 
 	public static void fireRules(Message message) {
+		System.out.println("Testing Rules...");
+
 		for (Rule r : ruleList) {
+			System.out.println("Type: "+message.getType()+ "  Rule type:"+ r.getType());
+
 			if (r.getType().equalsIgnoreCase(message.getType())) {
+				System.out.println("Rule Fired!");
+				System.out.println("Message: "+message.getSendMessage() );
+
 				mqttPublish = new MqttPublish(new Action(r.getAction().getTopic(), r.getAction().getAddress(),
-						(message.getMessage() + ";P2=" + System.currentTimeMillis()))); //rule ou a messagem define???
+						(message.getSendMessage() + "P2=" + System.currentTimeMillis()))); //rule ou a messagem define???
 				try {
 					mqttPublish.publish();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -31,6 +37,7 @@ public class FireRules {
 
 	public static void addRule(Rule rule) {
 		ruleList.add(rule);
+		System.out.println("New Rule Added");
 	}
 
 	public static List<Rule> getRuleList() {

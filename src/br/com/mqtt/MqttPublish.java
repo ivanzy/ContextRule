@@ -38,13 +38,14 @@ public class MqttPublish implements MqttCallback {
 		
 	}
 	public void publish() throws IOException {
-	
+		System.out.println("Publishing in address: "+action.getAddress()+"...");
 		if (client == null) {
 			this.connectMQTT(action.getAddress());
 		}
 		try {
 			MqttMessage message = new MqttMessage();
 			message.setPayload(action.getMessage().getBytes());
+			System.out.println("topic: " +action.getTopic()+ " Message: "+ action.getMessage());
 			client.publish(action.getTopic(), action.getMessage().getBytes(), Param.qos, false);
 		} catch (MqttPersistenceException e) {
 			// TODO Auto-generated catch block
@@ -53,7 +54,7 @@ public class MqttPublish implements MqttCallback {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		latch.countDown();
+		//latch.countDown();
 	}
 
 	@Override

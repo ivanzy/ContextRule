@@ -4,12 +4,29 @@ public class Message {
 
 	private String type;
 	private String resource;
-	private String message;
+	private String sendMessage;
+	private String payload;
 	private int rep;
 	private int exp;
 	private String scope;
 	private long p1;
 	private long p2;
+
+	public String getSendMessage() {
+		return sendMessage;
+	}
+
+	public void setSendMessage(String sendMessage) {
+		this.sendMessage = sendMessage;
+	}
+
+	public String getPayload() {
+		return payload;
+	}
+
+	public void setPayload(String payload) {
+		this.payload = payload;
+	}
 
 	public String getType() {
 		return type;
@@ -41,14 +58,6 @@ public class Message {
 
 	public void setResource(String resource) {
 		this.resource = resource;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
 	}
 
 	public int getRep() {
